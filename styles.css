@@ -8,7 +8,8 @@ body {
 
 #container1{
     border: 15px;
-    background-color: rgb(243, 243, 243);
+    background-color: aqua;
+    border-style: outset;
 
  font-family: 'Times New Roman', Times, serif;
  font-style: oblique;
@@ -50,3 +51,8 @@ body {
     margin-left: 10px;
   }
 
+#total-expenses{
+    border-style: outset;
+    background-color: rgb(170, 170, 170);
+    background: -moz-radial-gradient(80vh);
+}
