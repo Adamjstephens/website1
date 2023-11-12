@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+
+<body> 
+
+    <div class="container" id="container1" >Welcome to our spending tracker for 2023! This website is what we will be using to keep track of all of our purchases this year and make sure we do not overspend.</div>
+
+</body>
+<body>
+
+  <h1>Expense Tracker</h1>
+
+  <form id="expense-form">
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount" required>
+
+    <label for="comment">Comment:</label>
+    <input type="text" id="comment" placeholder="Add a comment">
+
+    <button type="button" onclick="addExpense()">Add Expense</button>
+  </form>
+
+  <h2>Expense List</h2>
+  <ul id="expense-list"></ul>
+
+  <p>Total Expenses: $<span id="total-expenses">0</span></p>
+
+  <script>
+    let totalExpenses = 0;
+
+    function addExpense() {
+      const amountInput = document.getElementById('amount');
+      const commentInput = document.getElementById('comment');
+      const amount = parseFloat(amountInput.value);
+      const comment = commentInput.value;
+      const date = new Date().toLocaleDateString();
+
+      if (isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+      }
+
+      totalExpenses += amount;
+
+      const expenseList = document.getElementById('expense-list');
+      const listItem = document.createElement('li');
+      listItem.className = 'expense-item';
+      listItem.innerHTML = `
+        <div>
+          <strong>${date}</strong><br>
+          Amount: $${amount.toFixed(2)} - Comment: ${comment}
+        </div>
+        <button onclick="removeExpense(this, ${amount})">Remove</button>
+      `;
+      expenseList.appendChild(listItem);
+
+      updateTotalExpenses();
+
+      // Clear input fields
+      amountInput.value = '';
+      commentInput.value = '';
+    }
+
+    function removeExpense(button, amount) {
+      const listItem = button.parentNode;
+      listItem.parentNode.removeChild(listItem);
+      totalExpenses -= amount;
+      updateTotalExpenses();
+    }
+
+    function updateTotalExpenses() {
+      const totalExpensesElement = document.getElementById('total-expenses');
+      totalExpensesElement.textContent = totalExpenses.toFixed(2);
+    }
+  </script>
+
+</body>
+
+<body>
+
+    <div class="goals" id="goals" ><a href="www.google.com">Our Goals</button></div>
+
+</body>
+</html>
