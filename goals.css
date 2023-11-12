@@ -3,4 +3,45 @@ body
     background-size: cover;
     border-width: 5px;
     border-color: solid black;
+    flex-direction: row;
+    display: flex;
+    
+}
+
+#title{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+  border-width: 15px;
+    border-style: groove;
+    border-color: solid black;
+    background-color: aqua;
+    width: 1000px;
+    height: fit-content;
+   position: relative;
+    
+    
+
+}
+
+#home
+{
+    
+    font-size: xx-large;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    left: 25px;
+   
+}
+
+#container2
+{
+position: relative;
+right: 50px;
+top: 150px;
+border-style:groove;
+border-radius: 15px;
+border-width: 10px;
+border-color: aqua;
+
 }
