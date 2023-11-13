@@ -1,10 +1,14 @@
 body {
     font-family: Arial, sans-serif;
     margin: 100px;
-    background-color: blueviolet;
+    margin-top: 5px;
+    margin-left: 80px;
     background-image: url(images/websiteback.jpg);
     background-size: cover;
-    }
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
 
 #container1{
     border: 15px;
@@ -23,6 +27,7 @@ body {
  
  
  
+ 
 }
 
 
@@ -36,7 +41,7 @@ body {
    {
     list-style: none;
     padding: 0;
-    background-color: rgb(219, 179, 179);
+    background-color: aqua;
     border: solid rgb(0, 0, 0);
     border-radius: 15px;
     
@@ -46,7 +51,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 0px;
-border-style: dotted;
+border-style: solid;
     padding: 8px;
     margin-bottom: 10px;
     border-left: 0px;
@@ -56,9 +61,8 @@ border-style: dotted;
   .expense-item button {
     margin-left: 10px;
   }
-
-#total-expenses{
-    border-style: outset;
-    background-color: rgb(170, 170, 170);
-    background: -moz-radial-gradient(80vh);
-}
+  #total-expenses
+  {
+      border-style: outset;
+      background-color: rgb(170, 170, 170);
+  }

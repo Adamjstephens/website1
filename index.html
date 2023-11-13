@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    #total-expenses.red {
+      color: red;
+    }
+  </style>
 </head>
 
 <body>
@@ -16,8 +21,8 @@
     <label for="amount">Amount:</label>
     <input type="number" id="amount" placeholder="Enter amount" required>
 
-   
-    <input type="text" id="comment" placeholder="Add a comment">
+    
+    <input type="text" id="item-service" placeholder="Add an item/service">
 
     <button type="button" onclick="addExpense()">Add Expense</button>
     <button type="button" onclick="removeAllExpenses()">Remove All Expenses</button>
@@ -27,25 +32,38 @@
   <h2>Expense List</h2>
   <ul id="expense-list"></ul>
 
-  <p>Total Expenses: $<span id="total-expenses">0</span></p>
+  <p>Total Expenses: $<span id="total-expenses">0.00</span></p>
 
   <script>
     let totalExpenses = 0;
     let expenses = [];
 
-    // Load saved expenses from local storage
-    if (localStorage.getItem('expenses')) {
-      expenses = JSON.parse(localStorage.getItem('expenses'));
-      updateExpenseList();
+    // Load expenses and total expenses from previously stored data
+    loadStoredData();
+
+    function loadStoredData() {
+      if (localStorage.getItem('expenseData')) {
+        const storedData = JSON.parse(localStorage.getItem('expenseData'));
+        totalExpenses = storedData.totalExpenses || 0;
+        expenses = storedData.expenses || [];
+        updateExpenseList();
+        updateTotalExpenses();
+      }
+    }
+
+    function saveDataToLocalStorage() {
+      const expenseData = {
+        totalExpenses,
+        expenses,
+      };
+      localStorage.setItem('expenseData', JSON.stringify(expenseData));
     }
 
     function addExpense() {
       const amountInput = document.getElementById('amount');
-      const commentInput = document.getElementById('comment');
+      const itemServiceInput = document.getElementById('item-service');
       const amount = parseFloat(amountInput.value);
-      const comment = commentInput.value;
-      const date = new Date();
-      const dateString = date.toLocaleDateString();
+      const itemService = itemServiceInput.value;
 
       if (isNaN(amount) || amount <= 0) {
         alert('Please enter a valid amount.');
@@ -54,21 +72,22 @@
 
       totalExpenses += amount;
 
+      const date = new Date();
       const expense = {
         amount,
-        comment,
-        date: dateString,
+        itemService,
+        dateTime: date,
       };
 
       expenses.push(expense);
-      localStorage.setItem('expenses', JSON.stringify(expenses));
+      saveDataToLocalStorage();
 
       updateExpenseList();
       updateTotalExpenses();
 
       // Clear input fields
       amountInput.value = '';
-      commentInput.value = '';
+      itemServiceInput.value = '';
     }
 
     function removeExpense(button, amount) {
@@ -76,7 +95,13 @@
       listItem.parentNode.removeChild(listItem);
       totalExpenses -= amount;
       updateTotalExpenses();
-      updateLocalStorage();
+
+      // Remove expense from the expenses array
+      const index = expenses.findIndex((expense) => expense.amount === amount);
+      if (index !== -1) {
+        expenses.splice(index, 1);
+      }
+      saveDataToLocalStorage();
     }
 
     function removeAllExpenses() {
@@ -84,25 +109,33 @@
       expenseList.innerHTML = '';
       totalExpenses = 0;
       expenses = [];
+      saveDataToLocalStorage();
       updateTotalExpenses();
-      updateLocalStorage();
     }
 
     function updateTotalExpenses() {
       const totalExpensesElement = document.getElementById('total-expenses');
       totalExpensesElement.textContent = totalExpenses.toFixed(2);
+
+      // Check if total expenses exceed $800 and change text color to red
+      if (totalExpenses > 800) {
+        totalExpensesElement.classList.add('red');
+      } else {
+        totalExpensesElement.classList.remove('red');
+      }
     }
 
     function updateExpenseList() {
       const expenseList = document.getElementById('expense-list');
       expenseList.innerHTML = '';
+
       expenses.forEach((expense) => {
         const listItem = document.createElement('li');
         listItem.className = 'expense-item';
         listItem.innerHTML = `
           <div>
-            Date: ${expense.date}<br>
-            Amount: $${expense.amount.toFixed(2)} - Comment: ${expense.comment}
+          
+            Amount: $${expense.amount.toFixed(2)} - Item/Service: ${expense.itemService}
           </div>
           <button onclick="removeExpense(this, ${expense.amount})">Remove</button>
         `;
@@ -110,13 +143,10 @@
       });
     }
 
-    function updateLocalStorage() {
-      localStorage.setItem('expenses', JSON.stringify(expenses));
-    }
-
     function sortExpensesByDay() {
-      expenses.sort((a, b) => new Date(a.date) - new Date(b.date));
+      expenses.sort((a, b) => a.dateTime - b.dateTime);
       updateExpenseList();
+      saveDataToLocalStorage();
     }
   </script>
 </body>
