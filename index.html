@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="styles.css">
+  <div class="banner" id="banner">
+    <a href="goals.html"><button>Goals</button></a>
+  </div>
+  
   <style>
     #total-expenses.red {
       color: red;
@@ -23,7 +27,7 @@
     <label for="amount">Amount:</label>
     <input type="number" id="amount" placeholder="Enter amount" required>
 
-    <label for="item-service">Item/Service:</label>
+    <label
     <input type="text" id="item-service" placeholder="Add an item/service">
 
     <button type="button" onclick="addExpense()">Add Expense</button>
@@ -33,8 +37,8 @@
 
   <h2>Expense List</h2>
   <ul id="expense-list"></ul>
-
-  <p>Total Expenses: $<span id="total-expenses">0.00</span></p>
+<div class="expcolor" id="expcolor"><p>Total Expenses: $<span id="total-expenses">0.00</span></p></div>
+  
 
   <script>
     let totalExpenses = 0;
