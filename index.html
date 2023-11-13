@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="styles.css">
   <div class="banner" id="banner">
@@ -18,19 +19,23 @@
 
 <body>
   <div class="container" id="container1">Welcome to our spending tracker for 2023! This website is what we will be using to keep track of all of our purchases this year and make sure we do not overspend.</div>
-
-  <h1>Expense Tracker</h1>
+<div class="container2" id="container222"><h1>Expense Tracker</h1>
 
   <form id="expense-form">
     <label for="amount">Amount:</label>
     <input type="number" id="amount" placeholder="Enter amount" required>
+  
     <input type="text" id="item-service" placeholder="Add an item/service">
     <button type="button" onclick="addExpense()">Add Expense</button>
     <button type="button" onclick="confirmRemoveAllExpenses()">Remove All Expenses</button>
-    <button type="button" onclick="sortExpensesByDay()">Sort by Day</button>
-  </form>
 
+  </form></div>
+  
+
+  
+<div class="explist" id=""</div>
   <h2>Expense List</h2>
+
   <ul id="expense-list"></ul>
   <div class="expcolor" id="expcolor"><p>Total Expenses: $<span id="total-expenses">0.00</span></p></div>
   
