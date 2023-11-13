@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="styles.css">
-  <body>
-    <div class="banner" id="banner " > <a href="goals.html"><button>Goals</button></a></div>
-  </body>
   <style>
     #total-expenses.red {
       color: red;
@@ -16,7 +13,9 @@
 </head>
 
 <body>
-  <div class="container" id="container1">Welcome to our spending tracker for 2023! This website is what we will be using to keep track of all of our purchases this year and make sure we do not overspend.</div>
+  <div class="container" id="container1">
+    Welcome to our spending tracker for 2023! This website is what we will be using to keep track of all of our purchases this year and make sure we do not overspend.
+  </div>
 
   <h1>Expense Tracker</h1>
 
@@ -24,20 +23,19 @@
     <label for="amount">Amount:</label>
     <input type="number" id="amount" placeholder="Enter amount" required>
 
-    
+    <label for="item-service">Item/Service:</label>
     <input type="text" id="item-service" placeholder="Add an item/service">
 
     <button type="button" onclick="addExpense()">Add Expense</button>
-    <button type="button" onclick="removeAllExpenses()">Remove All Expenses</button>
+    <button type="button" onclick="confirmRemoveAllExpenses()">Remove All Expenses</button>
     <button type="button" onclick="sortExpensesByDay()">Sort by Day</button>
-    
   </form>
 
   <h2>Expense List</h2>
   <ul id="expense-list"></ul>
-<div class="expcolor" id="expcolor "><p>Total Expenses: $<span id="total-expenses">0.00</span></p>
- </div>
-  
+
+  <p>Total Expenses: $<span id="total-expenses">0.00</span></p>
+
   <script>
     let totalExpenses = 0;
     let expenses = [];
@@ -108,6 +106,12 @@
       saveDataToLocalStorage();
     }
 
+    function confirmRemoveAllExpenses() {
+      if (confirm('Are you sure you want to remove all expenses?')) {
+        removeAllExpenses();
+      }
+    }
+
     function removeAllExpenses() {
       const expenseList = document.getElementById('expense-list');
       expenseList.innerHTML = '';
@@ -138,7 +142,6 @@
         listItem.className = 'expense-item';
         listItem.innerHTML = `
           <div>
-          
             Amount: $${expense.amount.toFixed(2)} - Item/Service: ${expense.itemService}
           </div>
           <button onclick="removeExpense(this, ${expense.amount})">Remove</button>
