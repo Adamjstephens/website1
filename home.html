@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="styles.css">
+  <body>
+    <div class="banner" id="banner " > <a href="goals.html"><button>Goals</button></a></div>
+  </body>
   <style>
     #total-expenses.red {
       color: red;
@@ -27,13 +30,14 @@
     <button type="button" onclick="addExpense()">Add Expense</button>
     <button type="button" onclick="removeAllExpenses()">Remove All Expenses</button>
     <button type="button" onclick="sortExpensesByDay()">Sort by Day</button>
+    
   </form>
 
   <h2>Expense List</h2>
   <ul id="expense-list"></ul>
-
-  <p>Total Expenses: $<span id="total-expenses">0.00</span></p>
-
+<div class="expcolor" id="expcolor "><p>Total Expenses: $<span id="total-expenses">0.00</span></p>
+ </div>
+  
   <script>
     let totalExpenses = 0;
     let expenses = [];
