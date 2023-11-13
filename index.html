@@ -5,15 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="styles.css">
-  
 </head>
 
-<body> 
-
-    <div class="container" id="container1" >Welcome to our spending tracker for 2023! This website is what we will be using to keep track of all of our purchases this year and make sure we do not overspend.</div>
-
-</body>
 <body>
+  <div class="container" id="container1">Welcome to our spending tracker for 2023! This website is what we will be using to keep track of all of our purchases this year and make sure we do not overspend.</div>
 
   <h1>Expense Tracker</h1>
 
@@ -21,10 +16,12 @@
     <label for="amount">Amount:</label>
     <input type="number" id="amount" placeholder="Enter amount" required>
 
-    <label for="comment">Comment:</label>
+   
     <input type="text" id="comment" placeholder="Add a comment">
 
     <button type="button" onclick="addExpense()">Add Expense</button>
+    <button type="button" onclick="removeAllExpenses()">Remove All Expenses</button>
+    <button type="button" onclick="sortExpensesByDay()">Sort by Day</button>
   </form>
 
   <h2>Expense List</h2>
@@ -34,13 +31,21 @@
 
   <script>
     let totalExpenses = 0;
+    let expenses = [];
+
+    // Load saved expenses from local storage
+    if (localStorage.getItem('expenses')) {
+      expenses = JSON.parse(localStorage.getItem('expenses'));
+      updateExpenseList();
+    }
 
     function addExpense() {
       const amountInput = document.getElementById('amount');
       const commentInput = document.getElementById('comment');
       const amount = parseFloat(amountInput.value);
       const comment = commentInput.value;
-      const date = new Date().toLocaleDateString();
+      const date = new Date();
+      const dateString = date.toLocaleDateString();
 
       if (isNaN(amount) || amount <= 0) {
         alert('Please enter a valid amount.');
@@ -49,18 +54,16 @@
 
       totalExpenses += amount;
 
-      const expenseList = document.getElementById('expense-list');
-      const listItem = document.createElement('li');
-      listItem.className = 'expense-item';
-      listItem.innerHTML = `
-        <div>
-          <strong>${date}</strong><br>
-          Amount: $${amount.toFixed(2)} - Comment: ${comment}
-        </div>
-        <button onclick="removeExpense(this, ${amount})">Remove</button>
-      `;
-      expenseList.appendChild(listItem);
+      const expense = {
+        amount,
+        comment,
+        date: dateString,
+      };
 
+      expenses.push(expense);
+      localStorage.setItem('expenses', JSON.stringify(expenses));
+
+      updateExpenseList();
       updateTotalExpenses();
 
       // Clear input fields
@@ -73,21 +76,48 @@
       listItem.parentNode.removeChild(listItem);
       totalExpenses -= amount;
       updateTotalExpenses();
+      updateLocalStorage();
+    }
+
+    function removeAllExpenses() {
+      const expenseList = document.getElementById('expense-list');
+      expenseList.innerHTML = '';
+      totalExpenses = 0;
+      expenses = [];
+      updateTotalExpenses();
+      updateLocalStorage();
     }
 
     function updateTotalExpenses() {
       const totalExpensesElement = document.getElementById('total-expenses');
       totalExpensesElement.textContent = totalExpenses.toFixed(2);
     }
+
+    function updateExpenseList() {
+      const expenseList = document.getElementById('expense-list');
+      expenseList.innerHTML = '';
+      expenses.forEach((expense) => {
+        const listItem = document.createElement('li');
+        listItem.className = 'expense-item';
+        listItem.innerHTML = `
+          <div>
+            Date: ${expense.date}<br>
+            Amount: $${expense.amount.toFixed(2)} - Comment: ${expense.comment}
+          </div>
+          <button onclick="removeExpense(this, ${expense.amount})">Remove</button>
+        `;
+        expenseList.appendChild(listItem);
+      });
+    }
+
+    function updateLocalStorage() {
+      localStorage.setItem('expenses', JSON.stringify(expenses));
+    }
+
+    function sortExpensesByDay() {
+      expenses.sort((a, b) => new Date(a.date) - new Date(b.date));
+      updateExpenseList();
+    }
   </script>
-
-</body>
-
-<body>
-
-    <div class=goals id=goals ></div> 
-    <a href="goals.html"><button>Our Goals</button></a>
-</div>
-
 </body>
 </html>

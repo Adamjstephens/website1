@@ -18,6 +18,8 @@ body {
  position: relative;
  top: 2px;
  left: 20px;
+ border-style: solid; 
+ padding: 8px;
  
  
  
@@ -43,9 +45,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    border-bottom: 0px;
+border-style: dotted;
     padding: 8px;
     margin-bottom: 10px;
+    border-left: 0px;
+    border-right: 0px;
+    
   }
   .expense-item button {
     margin-left: 10px;
